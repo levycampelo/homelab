@@ -1,0 +1,6 @@
+---
+- name: Deploy VM on Proxmox
+  hosts: k3s-nodes
+  roles:
+    - proxmox
+

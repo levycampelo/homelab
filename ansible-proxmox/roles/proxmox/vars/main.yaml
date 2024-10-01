@@ -1,0 +1,12 @@
+---
+proxmox_host: "192.168.68.199"        # ip do proxmox
+proxmox_user: "root@pam"              # user
+proxmox_password: "mudar"             # senha
+proxmox_node: "pve"                   # node do datacenter
+storage: "local-lvm"                  # storage
+iso_file: "/hosts/ubuntu22.04.iso"    # caminho para a ISO
+vm_count: 3                           # quantidade vm
+memory: 2048                          # memoria
+cores: 4                              # vcpu
+disk_size: 20                         # disco
+
