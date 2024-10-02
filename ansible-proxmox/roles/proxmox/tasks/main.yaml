@@ -1,24 +1,22 @@
 ---
 - name: Create VMs
   proxmox_kvm:
+  #community.general.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
     api_password: "{{ proxmox_password }}"
-    api_validate_certs: false
     node: "{{ proxmox_node }}"
+    clone: "template-ubuntu"
     vmid: "{{ 100 + item }}" 
     name: "ubuntu-vm-{{ item }}"
+    full: true
     memory: "{{ memory }}"
     cores: "{{ cores }}"
-    scsihw: "virtio-scsi-pci"
-    boot: "cdrom"
-    ide2: "{{ storage }}:iso/{{ iso_file }},media=cdrom"
-    scsi0: "{{ storage }}:{{ disk_size }}G"
-    net0: "virtio,bridge=vmbr0"
-    ostype: "l26" 
+    net: '{"net0":"virtio,bridge=vmbr0"}' 
     pool: "default"
-    onboot: true
-    autostart: true
+    timeout: 120
+    #onboot: true
+    #autostart: true
     state: present
   loop: "{{ range(1, vm_count + 1) | list }}"
 

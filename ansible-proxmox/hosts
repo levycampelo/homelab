@@ -1,7 +1,13 @@
+[proxmox]
+192.168.68.69 ansible_python_interpreter=~/proxmoxer-venv/bin/python
+
 [homelab]
 192.168.68.111
 192.168.68.110
 192.168.68.109
 
-[all:vars]
+[proxmox:vars]
+ansible_user=root
+
+[homelab:vars]
 ansible_user=levycampelo
