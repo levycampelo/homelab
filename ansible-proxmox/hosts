@@ -1,0 +1,7 @@
+[homelab]
+192.168.68.111
+192.168.68.110
+192.168.68.109
+
+[all:vars]
+ansible_user=levycampelo
