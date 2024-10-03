@@ -1,15 +1,24 @@
-### Instalar dependencias
+## Ambiente homelab:
+Neste artigo, vou demonstrar como administar um ambiente proxmox.<br>
+Nesse ambiente, usamos a seguinte versão:
+
+> **Sistema Operacional:** Debian 12<br>
+> **Imagem:** Ubuntu 20.04.6<br>
+> **Proxmox:** 8.2.7
+
+## Criar um ambiente virtualizado no proxmox
+python3.11-venv
+python3 -m venv ~/proxmoxer-venv
+pip install proxmoxer
+pip install requests
+
+## Acessar o ambiente virtualizado
+python3 -m venv ~/proxmoxer-venv
+
+## Instalar dependencias bastion
 apt install ansible -y<br>
 apt install python3-pip -y<br>
 pip install --upgrade ansible<br>
 pip3 install proxmoxer<br>
 ansible-galaxy collection install community.general --force<br>
 
-### Criar um ambiente virtualizado no proxmox
-python3.11-venv
-python3 -m venv ~/proxmoxer-venv
-pip install proxmoxer
-
-# acessar o ambiente virtualizado
-python3 -m venv ~/proxmoxer-venv
-pip install requests
