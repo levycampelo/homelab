@@ -1,16 +1,16 @@
 ## Ambiente homelab:
 Neste artigo, vou demonstrar como administar um ambiente proxmox.<br>
-Nesse ambiente, usamos a seguinte versão:
+Nesse ambiente, usamos as seguintes versões:
 
 > **Sistema Operacional:** Debian 12<br>
 > **Imagem:** Ubuntu 20.04.6<br>
 > **Proxmox:** 8.2.7
 
 ## Criar um ambiente virtualizado no proxmox
-python3.11-venv
-python3 -m venv ~/proxmoxer-venv
-pip install proxmoxer
-pip install requests
+python3.11-venv<br>
+python3 -m venv ~/proxmoxer-venv<br>
+pip install proxmoxer<br>
+pip install requests<br>
 
 ## Acessar o ambiente virtualizado
 python3 -m venv ~/proxmoxer-venv
