@@ -1,11 +1,11 @@
 ---
-proxmox_host: "192.168.68.69"        # ip do proxmox
-proxmox_user: "root@pam"              # user
-proxmox_password: "L1x03l3tr0n1c0"             # senha
-proxmox_node: "pve"                   # node do datacenter
-storage: "local-lvm"                  # storage
-vm_count: 1                           # quantidade vm
-memory: 2048                          # memoria
-cores: 2                              # vcpu
-disk_size: 20                         # disco
+proxmox_host: "192.168.68.69" 
+proxmox_user: "root@pam" 
+proxmox_password: "senha" 
+proxmox_node: "pve" 
+storage: "local-lvm" 
+vm_count: 1 
+memory: 2048 
+cores: 2 
+disk_size: 20
 
