@@ -7,6 +7,8 @@ Nesse ambiente, usamos as seguintes versões:
 > **Proxmox:** 8.2.7
 
 ## Criar um ambiente virtualizado no proxmox:
+apt install python3.11-venv<br>
+source ~/proxmoxer-venv/bin/activate<br>
 python3.11-venv<br>
 python3 -m venv ~/proxmoxer-venv<br>
 pip install proxmoxer<br>
