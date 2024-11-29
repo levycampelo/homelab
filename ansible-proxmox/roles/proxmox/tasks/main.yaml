@@ -1,5 +1,5 @@
 ---
-- name: Create VMs
+- name: create-vms 
   proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
@@ -12,5 +12,5 @@
     memory: "{{ memory }}"
     cores: "{{ cores }}"
     net: '{"net0":"virtio,bridge=vmbr0"}' 
-    timeout: 600 
+    timeout: 180 
   loop: "{{ vm_list }}" 
