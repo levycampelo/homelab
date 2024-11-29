@@ -1,11 +1,17 @@
 ---
 proxmox_host: "192.168.68.69" 
 proxmox_user: "root@pam" 
-proxmox_password: "senha" 
-proxmox_node: "pve" 
+proxmox_password: "L1x03l3tr0n1c0" 
+proxmox_node: "beta" 
 storage: "local-lvm" 
-vm_count: 1 
+vm_count: 4 
 memory: 2048 
 cores: 2 
-disk_size: 20
+disk_size: 20 
+vm_list:
+  - { name: "k8s-master-0", target: 201 }
+  - { name: "k8s-master-1", target: 202 }
+  - { name: "k8s-worker-0", target: 203 }
+  - { name: "k8s-worker-1", target: 204 }
+  - { name: "k8s-worker-2", target: 205 }
 

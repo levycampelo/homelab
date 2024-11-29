@@ -1,22 +1,16 @@
 ---
 - name: Create VMs
   proxmox_kvm:
-  #community.general.proxmox_kvm:
     api_host: "{{ proxmox_host }}"
     api_user: "{{ proxmox_user }}"
     api_password: "{{ proxmox_password }}"
     node: "{{ proxmox_node }}"
-    clone: "template-ubuntu"
-    vmid: "{{ 100 + item }}" 
-    name: "ubuntu-vm-{{ item }}"
+    clone: true
+    vmid: 100 #ID na vm para o clone 
+    name: "{{ item.name }}"
     full: true
     memory: "{{ memory }}"
     cores: "{{ cores }}"
     net: '{"net0":"virtio,bridge=vmbr0"}' 
-    pool: "default"
-    timeout: 120
-    #onboot: true
-    #autostart: true
-    state: present
-  loop: "{{ range(1, vm_count + 1) | list }}"
-
+    timeout: 600 
+  loop: "{{ vm_list }}" 
