@@ -1,7 +1,7 @@
 ---
 proxmox_host: "192.168.68.69" 
 proxmox_user: "root@pam" 
-proxmox_password: "L1x03l3tr0n1c0" 
+proxmox_password: "password" 
 proxmox_node: "beta" 
 storage: "local-lvm" 
 vm_count: 4 
