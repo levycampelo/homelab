@@ -6,11 +6,11 @@
     api_password: "{{ proxmox_password }}"
     node: "{{ proxmox_node }}"
     clone: true
-    vmid: 100 #ID na vm para o clone 
+    vmid: 102 #ID na vm para o clone 
     name: "{{ item.name }}"
     full: true
     memory: "{{ memory }}"
     cores: "{{ cores }}"
     net: '{"net0":"virtio,bridge=vmbr0"}' 
-    timeout: 180 
+    timeout: 300 
   loop: "{{ vm_list }}" 
