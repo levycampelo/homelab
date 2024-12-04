@@ -1,5 +1,5 @@
 ---
-- name: Deploy Kubernetes
+- name: deploy-kubernetes
   hosts: k8s-cluster
   become: yes
   roles:
