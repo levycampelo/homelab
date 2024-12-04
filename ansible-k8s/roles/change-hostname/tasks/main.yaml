@@ -1,0 +1,10 @@
+---
+- name: Atualizar hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: Atualizar /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^127.0.1.1"
+    line: "127.0.1.1 {{ hostname }}"
