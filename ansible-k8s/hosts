@@ -17,3 +17,9 @@ ansible_user=levycampelo
 [kubernetes_worker:vars]
 ansible_user=levycampelo
 
+[proxmox]
+192.168.68.69 ansible_python_interpreter=~/proxmoxer-venv/bin/python
+
+[proxmox:vars]
+ansible_user=root
+

@@ -1,0 +1,14 @@
+#variaveis default
+#excluir e testar sem.
+---
+proxmox_host: "localhost"
+proxmox_user: "root@pam"
+proxmox_password: "password"
+proxmox_node: "beta"
+storage: "local-lvm"
+iso_file: "/hosts/ubuntu22.04.iso"
+vm_count: 3 
+memory: 2048 
+cores: 2 
+disk_size: 20
+

@@ -1,8 +1,22 @@
 ---
-- name: deploy-vm-kubernetes
-  hosts: k8s-cluster 
+- name: Deploy Proxmox
+  hosts: proxmox
+  tasks:
+    - name: Instalar Proxmox
+      include_role:
+        name: proxmox
+
+- name: Pausar por 300 segundos
+  hosts: localhost
+  tasks:
+    - name: Aguardar 5 minutos antes de continuar
+      pause:
+        seconds: 300
+
+- name: Deploy Kubernetes
+  hosts: k8s-cluster
   roles:
     - install-k8s
     - change-hostname
-    - join-master 
+    - join-master
 
