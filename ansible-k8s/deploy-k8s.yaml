@@ -1,6 +1,7 @@
 ---
 - name: Deploy Kubernetes
   hosts: k8s-cluster
+  become: yes
   roles:
     - change-hostname
-
+    - install-k8s

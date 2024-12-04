@@ -1,0 +1,15 @@
+---
+pacote_remover: podman
+pacote_remover_podman_docker: podman-docker
+pacote_remover_runc: runc
+repo_docker: "dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+docker_pacotes:
+  - docker-ce
+  - docker-ce-cli
+k8s_repo_url: "https://pkgs.k8s.io/core:/stable:/v1.31/rpm/"
+k8s_gpg_key: "https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key"
+k8s_pacotes:
+  - kubelet
+  - kubeadm
+  - kubectl
+iproute_pacote: iproute-tc
