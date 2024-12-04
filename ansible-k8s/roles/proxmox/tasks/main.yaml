@@ -6,7 +6,7 @@
     api_password: "{{ proxmox_password }}"
     node: "{{ proxmox_node }}"
     clone: true
-    vmid: 100 # ID do template clone 
+    vmid: 106 # ID do template clone 
     name: "{{ item.name }}"
     full: true
     memory: "{{ memory }}"
