@@ -19,10 +19,11 @@ pip install requests
 ```bash
 python3 -m venv ~/proxmoxer-venv
 ```
-## Instalar dependencias no bastion:
+## Instalar as dependencias no bastion:
 ```bash
 apt install ansible -y
 apt install python3-pip -y
 pip install --upgrade ansible
 pip3 install proxmoxer
 ansible-galaxy collection install community.general --force
+```
