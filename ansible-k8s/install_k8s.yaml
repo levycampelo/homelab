@@ -1,0 +1,87 @@
+---
+- name: Install Kubernetes Components
+  hosts: k8s-cluster
+  become: yes
+  tasks:
+    - name: Remover pacote podman
+      dnf:
+        name: podman
+        state: absent
+
+    - name: Remover pacote podman-docker
+      dnf:
+        name: podman-docker
+        state: absent
+
+    - name: Remover pacotes relacionados ao runc
+      dnf:
+        name: runc
+        state: absent
+
+    - name: Limpar o cache do dnf
+      command: dnf clean all
+      
+    - name: Disable swap (Kubernetes requires swap to be off)
+      command: swapoff -a
+      ignore_errors: true
+
+    - name: Disable swap permanently
+      lineinfile:
+        path: /etc/fstab
+        regexp: '^.*swap.*'
+        state: absent
+
+    - name: Add Docker repo
+      command: "dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+      ignore_errors: yes
+
+    - name: Instalar Docker com allowerasing
+      dnf:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+            #- containerd.io
+
+        state: present
+        allowerasing: yes
+
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Criar repositório Kubernetes
+      copy:
+        dest: /etc/yum.repos.d/kubernetes.repo
+        content: |
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://pkgs.k8s.io/core:/stable:/v1.31/rpm/
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install kubelet, kubeadm, kubectl
+      dnf:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+    - name: Start and enable kubelet service
+      systemd:
+        name: kubelet
+        enabled: yes
+        state: started
+
+    - name: Instalar o pacote iproute-tc
+      dnf:
+        name: iproute-tc
+        state: present
+        update_cache: yes

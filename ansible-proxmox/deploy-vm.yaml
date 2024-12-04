@@ -1,0 +1,5 @@
+---
+- name: deploy-vm-proxmox
+  hosts: proxmox 
+  roles:
+    - proxmox

@@ -1,0 +1,38 @@
+---
+- name: Install Kubernetes Components
+  hosts: k8s-cluster
+  become: yes
+  tasks:
+    - name: Inicializar o cluster Kubernetes no primeiro nó master
+      command: kubeadm init --control-plane-endpoint="k8s-local.homelab.com:6443" --pod-network-cidr=10.244.0.0/16 --cri-socket /var/run/dockershim.sock --ignore-preflight-errors=CRI
+      register: kubeadm_init_output
+      when: inventory_hostname == 'master1'
+      ignore_errors: yes
+
+    - name: Criar diretório .kube no root
+      file:
+        path: /root/.kube
+        state: directory
+        mode: '0700'
+
+    - name: Copiar o arquivo de configuração do kubectl
+      command: "cp /etc/kubernetes/admin.conf /root/.kube/config"
+      when: kubeadm_init_output.rc == 0
+
+    - name: Definir o contexto kubectl para usar o arquivo de configuração
+      command: "kubectl config set-context --current --namespace=kube-system"
+      when: kubeadm_init_output.rc == 0
+
+    - name: Instalar rede CNI (Flannel)
+      command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+      when: kubeadm_init_output.rc == 0
+
+    - name: Exibir comando para adicionar os nós worker
+      debug:
+        msg: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }}"
+      when: kubeadm_init_output.rc == 0
+
+    - name: Adicionar nó master 2 ao cluster
+      command: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }} --control-plane"
+      when: inventory_hostname == 'master2' and kubeadm_init_output.rc == 0
+
