@@ -1,0 +1,8 @@
+---
+- name: deploy-vm-kubernetes
+  hosts: k8s-cluster 
+  roles:
+    - install-k8s
+    - change-hostname
+    - join-master 
+
