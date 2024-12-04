@@ -2,7 +2,7 @@
 proxmox_host: "192.168.68.69" 
 proxmox_user: "root@pam" 
 proxmox_password: "password" 
-proxmox_node: "beta" 
+proxmox_node: "alpha" 
 storage: "local-lvm" 
 vm_count: 4 
 memory: 2048 
