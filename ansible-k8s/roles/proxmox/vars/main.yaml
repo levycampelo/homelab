@@ -9,9 +9,9 @@ memory: 2048
 cores: 2 
 disk_size: 20 
 vm_list:
-  - { name: "keepalived", target: 201 }
-    #- { name: "k8s-master-1", target: 202 }
-    #- { name: "k8s-worker-0", target: 203 }
-    #- { name: "k8s-worker-1", target: 204 }
-    #- { name: "k8s-worker-2", target: 205 }
+  - { name: "k8s-master-0", target: 201 }
+  - { name: "k8s-master-1", target: 202 }
+  - { name: "k8s-worker-0", target: 203 }
+  - { name: "k8s-worker-1", target: 204 }
+  - { name: "k8s-worker-2", target: 205 }
 
