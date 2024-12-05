@@ -8,3 +8,12 @@
     path: /etc/hosts
     regexp: "^127.0.1.1"
     line: "127.0.1.1 {{ hostname }}"
+
+- name: Configurar SELinux para desabilitado
+  selinux:
+    state: disabled
+
+- name: Reboot da maquina
+  reboot:
+    reboot_timeout: 300
+    test_command: whoami

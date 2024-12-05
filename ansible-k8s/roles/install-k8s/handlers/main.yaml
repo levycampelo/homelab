@@ -1,0 +1,6 @@
+---
+- name: Recarregar modulos
+  ansible.builtin.systemd:
+    name: systemd-modules-load.service
+    state: restarted
+  become: true

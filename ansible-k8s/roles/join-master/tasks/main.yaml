@@ -1,0 +1,35 @@
+---
+- name: Iniciar o primeiro no master
+  command: kubeadm init --control-plane-endpoint="192.168.68.68:6443" --pod-network-cidr=10.244.0.0/16 --cri-socket /var/run/dockershim.sock --ignore-preflight-errors=CRI
+  register: kubeadm_init_output
+  when: inventory_hostname == 'master0'
+  ignore_errors: yes
+
+- name: criar diretorio .kube no root
+  file:
+    path: /root/.kube
+    state: directory
+    mode: '0700'
+
+- name: copiar o arquivo de configuracao do kubectl
+  command: "cp /etc/kubernetes/admin.conf /root/.kube/config"
+  when: kubeadm_init_output.rc == 0
+
+- name: Definir o contexto kubectl para usar o arquivo de configuracao
+  command: "kubectl config set-context --current --namespace=kube-system"
+  when: kubeadm_init_output.rc == 0
+
+- name: Instalar rede CNI
+  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  when: kubeadm_init_output.rc == 0
+
+- name: Exibir comando para adicionar os nos worker
+  debug:
+     msg: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }}"
+  when: kubeadm_init_output.rc == 0
+
+- name: Adicionar no master 1 ao cluster
+  command: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }} --control-plane"
+  when: inventory_hostname == 'master1' and kubeadm_init_output.rc == 0
+  register: join_master_output
+  failed_when: join_master_output.rc != 0

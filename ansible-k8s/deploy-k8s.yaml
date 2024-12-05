@@ -5,3 +5,4 @@
   roles:
     - change-hostname
     - install-k8s
+      #- join-master
