@@ -3,6 +3,6 @@
   hosts: k8s-cluster
   become: yes
   roles:
-    - change-hostname
+          #- change-hostname
     - install-k8s
-      #- join-master
+    #- join-master

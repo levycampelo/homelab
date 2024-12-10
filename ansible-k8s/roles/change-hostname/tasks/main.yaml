@@ -1,19 +1,53 @@
 ---
-- name: Atualizar hostname
+- name: atualizar hostname
   hostname:
     name: "{{ hostname }}"
 
-- name: Atualizar /etc/hosts
+- name: atualizar /etc/hosts
   lineinfile:
     path: /etc/hosts
     regexp: "^127.0.1.1"
     line: "127.0.1.1 {{ hostname }}"
+    
+- name: desabilitar IPv6
+  sysctl:
+    name: "net.ipv6.conf.all.disable_ipv6"
+    value: "1"
+    state: "present"
+    reload: yes
 
-- name: Configurar SELinux para desabilitado
+- name: desabilitar IPv6 interface
+  sysctl:
+    name: "net.ipv6.conf.default.disable_ipv6"
+    value: "1"
+    state: "present"
+    reload: yes
+
+- name: desabilitar IPv6 no config
+  lineinfile:
+    path: /etc/sysctl.d/99-disable-ipv6.conf
+    line: "net.ipv6.conf.all.disable_ipv6 = 1"
+    create: yes
+    state: present
+    
+- name: aplicar sysctl
+  command: sysctl -p
+
+- name: parar firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: stopped
+
+- name: desativar firewalld service
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: no
+
+- name: configurar SELinux para desabilitado
   selinux:
     state: disabled
 
-- name: Reboot da maquina
+- name: reboot da maquina
   reboot:
     reboot_timeout: 300
     test_command: whoami

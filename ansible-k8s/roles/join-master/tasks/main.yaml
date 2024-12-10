@@ -1,6 +1,12 @@
 ---
-- name: Iniciar o primeiro no master
-  command: kubeadm init --control-plane-endpoint="192.168.68.68:6443" --pod-network-cidr=10.244.0.0/16 --cri-socket /var/run/dockershim.sock --ignore-preflight-errors=CRI
+- name: baixar imagins k8s containerd
+  command: crictl pull registry.k8s.io/pause:3.9
+
+- name: baixar imagens k8s
+  command: kubeadm config images pull
+
+- name: iniciar primeiro no
+  command: kubeadm init
   register: kubeadm_init_output
   when: inventory_hostname == 'master0'
   ignore_errors: yes
@@ -28,8 +34,8 @@
      msg: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }}"
   when: kubeadm_init_output.rc == 0
 
-- name: Adicionar no master 1 ao cluster
-  command: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }} --control-plane"
-  when: inventory_hostname == 'master1' and kubeadm_init_output.rc == 0
-  register: join_master_output
-  failed_when: join_master_output.rc != 0
+  #- name: Adicionar no master 1 ao cluster
+  #command: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }} --control-plane"
+  #when: inventory_hostname == 'master1' and kubeadm_init_output.rc == 0
+  #  register: join_master_output
+  #  failed_when: join_master_output.rc != 0
