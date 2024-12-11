@@ -1,10 +1,4 @@
 ---
-- name: baixar imagins k8s containerd
-  command: crictl pull registry.k8s.io/pause:3.9
-
-- name: baixar imagens k8s
-  command: kubeadm config images pull
-
 - name: iniciar primeiro no
   command: kubeadm init
   register: kubeadm_init_output
@@ -21,15 +15,39 @@
   command: "cp /etc/kubernetes/admin.conf /root/.kube/config"
   when: kubeadm_init_output.rc == 0
 
-- name: Definir o contexto kubectl para usar o arquivo de configuracao
-  command: "kubectl config set-context --current --namespace=kube-system"
+- name: criar o usuario kube
+  user:
+    name: kube
+    group: wheel
+    state: present
+
+- name: senha para o kube
+  user:
+    name: kube
+    password: "{{ kube_password | password_hash('sha512') }}"
   when: kubeadm_init_output.rc == 0
 
-- name: Instalar rede CNI
-  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    #- name: Definir o contexto kubectl para usar o arquivo de configuracao
+    #command: "kubectl config set-context --current --namespace=kube-system"
+    #when: kubeadm_init_output.rc == 0
+
+- name: instalar rede CNI
+  command: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.3/manifests/calico.yaml 
   when: kubeadm_init_output.rc == 0
 
-- name: Exibir comando para adicionar os nos worker
+- name: label dos worker
+  command: kubectl label node worker0 node-role.kubernetes.io/worker=worker
+  when: kubeadm_init_output.rc == 0
+
+- name: label dos worker
+  command: kubectl label node worker1 node-role.kubernetes.io/worker=worker
+  when: kubeadm_init_output.rc == 0
+
+- name: ativar metricas dos pods
+  command: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.3/components.yaml
+  when: kubeadm_init_output.rc == 0
+
+- name: comando para adicionar os worker
   debug:
      msg: "{{ kubeadm_init_output.stdout | regex_search('kubeadm join.*', '\\0') }}"
   when: kubeadm_init_output.rc == 0
