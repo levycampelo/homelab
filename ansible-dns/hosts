@@ -1,0 +1,25 @@
+[masters]
+master0 ansible_host=192.168.68.101 ansible_user=root
+#master1 ansible_host=192.168.68.107 ansible_user=root
+
+[workers]
+worker0 ansible_host=192.168.68.106 ansible_user=root
+worker1 ansible_host=192.168.68.107 ansible_user=root
+#worker2 ansible_host=192.168.68.113 ansible_user=root
+
+[k8s-cluster:children]
+masters
+workers
+
+[kubernetes_master:vars]
+ansible_user=levycampelo
+
+[kubernetes_worker:vars]
+ansible_user=levycampelo
+
+[proxmox]
+192.168.68.69 ansible_python_interpreter=~/proxmoxer-venv/bin/python
+
+[proxmox:vars]
+ansible_user=root
+
