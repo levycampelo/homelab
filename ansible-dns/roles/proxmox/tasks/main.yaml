@@ -1,0 +1,16 @@
+---
+- name: create-vms 
+  proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    node: "{{ proxmox_node }}"
+    clone: true
+    vmid: 106 # ID do template clone 
+    name: "{{ item.name }}"
+    full: true
+    memory: "{{ memory }}"
+    cores: "{{ cores }}"
+    net: '{"net0":"virtio,bridge=vmbr0"}' 
+    timeout: 300 
+  loop: "{{ vm_list }}" 

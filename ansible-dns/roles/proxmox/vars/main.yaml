@@ -1,0 +1,12 @@
+---
+proxmox_host: "192.168.68.69" 
+proxmox_user: "root@pam" 
+proxmox_password: "password" 
+proxmox_node: "alpha" 
+storage: "local-lvm" 
+vm_count: 4 
+memory: 2048 
+cores: 2 
+disk_size: 20 
+vm_list:
+  - { name: "dns" }
