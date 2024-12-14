@@ -1,17 +1,7 @@
-[masters]
-master0 ansible_host=192.168.68.101 ansible_user=root
-#master1 ansible_host=192.168.68.107 ansible_user=root
+[dns]
 
-[workers]
-worker0 ansible_host=192.168.68.106 ansible_user=root
-worker1 ansible_host=192.168.68.107 ansible_user=root
-#worker2 ansible_host=192.168.68.113 ansible_user=root
 
-[k8s-cluster:children]
-masters
-workers
-
-[kubernetes_master:vars]
+[dns:vars]
 ansible_user=levycampelo
 
 [kubernetes_worker:vars]
