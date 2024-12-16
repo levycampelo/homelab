@@ -9,9 +9,9 @@ memory: 2048
 cores: 2 
 disk_size: 20 
 vm_list:
-  - { name: "k8s-master-lk-0" }
-  - { name: "k8s-master-lk-1" }
-  - { name: "k8s-worker-lk-0" }
-  - { name: "k8s-worker-lk-1" }
-  - { name: "k8s-worker-lk-2" }
+  - { name: "k8s-master-0" }
+  - { name: "k8s-master-1" }
+  - { name: "k8s-worker-0" }
+  - { name: "k8s-worker-1" }
+  - { name: "k8s-worker-2" }
 
